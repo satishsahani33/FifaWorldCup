@@ -1,0 +1,6 @@
+<h1>UPDATE THE MATCH SCORE</h1>
+<%= link_to('Back to list', {:controller=>'match',:action=>'list'}) %>
+<%= form_for(:match, :url => {:controller => 'match', :action => 'update', :id=>@match.id}) do |f| %>
+	<%= render(:partial=>'form', :locals=>{:f=>f})%>
+	<%= f.submit(:SAVEMATCH) %>
+<% end %>

@@ -1,0 +1,39 @@
+<h1>LISTS OF ALL THE MATCHES</h1>
+<%= link_to('Create new match', {:controller=>'match',:action=>'new'}) %>
+<table border='1'>
+	<tr>
+		<th>DATE</th>
+		<th>DAY</th>
+		<th>TEAM A</th>
+		<th>TEAM B</th>
+		<th>TEAM A SCORE</th>
+		<th>TEAM B SCORE</th>
+		<th>WINNERS USERS</th>
+		<th>ACTION</th>
+	</tr>
+	<% @matches.each do |match| %>
+		<% winner=[]%>
+		<% predictions=Prediction.where(:match_id=>match.id) %>
+			<% predictions.each do |prediction| %>
+				<% if prediction.bet %>
+					<% if prediction.predict_score_a==match.score_a && prediction.predict_score_b==match.score_b %>
+					<% user=User.find_by_id(prediction.user_id) %>
+						<% winner<< user.username%>
+					<% end %>
+				<% end %>
+			<% end %>
+	<tr>
+		<td><%= (match.date+4.hours+45.minutes).to_formatted_s(:db) %></td>
+		<td><%= match.day %></td>
+		<td><%= match.team_a %></td>
+		<td><%= match.team_b %></td>
+		<td><%= match.score_a %></td>
+		<td><%= match.score_b %></td>
+		<td><%=  winner.sort %></td>
+		<td>
+			<%= link_to('Edit', {:controller=>'match',:action=>'edit', :id=>match.id}) %>
+			<%= link_to('Delete',{:controller=>'match',:action=>'delete', :id=>match.id}) %>
+		</td>
+	</tr>
+	<% end %>
+</table>

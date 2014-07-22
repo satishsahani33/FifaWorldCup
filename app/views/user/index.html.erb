@@ -1,0 +1,27 @@
+
+
+<center>Welcome To fifa 14 Match Prediction<br/>
+Please Click signin to log into your account<br/>
+OR<br/>
+Click signup to Create New User<br/>
+<%= link_to("Sign-In", {:controller=>'user', :action=>'signin'})%>
+&nbsp;
+&nbsp;
+<%= link_to("Sign-Up", {:controller=>'user',:action=>'signup'})%>
+<br/>
+Score Board
+<table border="1">
+	<tr>
+		<th>USERS</th>
+		<th>SCORE</th>
+	</tr>
+	<% @ScoreBoard.each do |user| %>
+		<tr>
+			<td><%= user[0] %></td>
+			<td><%= user[1] %></td>
+		</tr>
+	<% end %>
+</table>
+
+<br/>
+</center>

@@ -1,0 +1,44 @@
+<% if User.adminUser(session[:user])%>
+	<%= form_for(:feedback , :url=>{:controller=>'feedbacks', :action=>'create_question'}) do |f| %>
+		<div class="label">
+			<h2><%= f.label "ENTER YOUR FEEDBACK" %></h2>
+		</div>
+		<div class="textarea">
+			<%= f.hidden_field :user_id, :value=>session[:user] %>
+			<%= f.text_area :feedback, :size=>"50x10" %>
+		</div>
+			<%= f.submit :submit, :class=>"button" %>
+	<% end %> 
+<% end %>
+<br/>
+<br/>
+<table border="1" cellpadding="10">
+	<tr>
+		<th>Question Date</th>
+		<th>QUESTION</th>
+		<th>ANSWER</th>
+	</tr>
+<% if @feedbacks.present? %>
+	<% @feedbacks.each do |feed|%>
+		<% if !feed.feed_id.present? %>
+			<tr>
+				
+					<% user=User.find_by_id(feed.user_id) %>
+					<td rowspan="2"><%= (feed.created_at+4.hours+45.minutes).to_formatted_s(:db) %></td>
+					<td><%= simple_format(feed.feedback) %></td>
+						<% if Feedback.find_all_by_feed_id(feed.feed_id).present? %>
+							<% feed_no=Feedback.find_all_by_feed_id(feed.id).length.to_s+" answers" %>
+						<% else %>
+							<% feed_no="0 answers" %>
+						<% end %>
+						<td rowspan="2"><%= link_to(feed_no, {:controller=>'feedbacks', :action=>'reply', :id=>feed.id}) %></td>
+			</tr>
+			<%# if fe %>
+				<tr>
+					<td align="right"><%= link_to("reply",{:controller=>'feedbacks', :action=>'reply', :id=>feed.id}) %></td>
+				</tr>
+			<%# end %>
+		<% end %>
+	<% end %>
+<% end %>
+</table>

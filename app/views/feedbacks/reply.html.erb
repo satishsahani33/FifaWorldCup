@@ -1,0 +1,30 @@
+	<br/>
+	<br/>
+	<strong><%= "Question"+": " %></strong><%= simple_format(@feed.feedback) %>
+	<br/>
+	<br/>
+	<p><b>ANSWERS:</b><p>
+	<table>
+	<% @replies.each do |reply| %>
+	<tr>
+		<td><% user=User.find_by_id(reply.user_id) %></td>
+			<!--<td><strong><%= user.username.capitalize+": " %></strong><b>answer received!!!all the answers will be shown after 6 p.m</b><br/></td>-->
+			<td><strong><%= user.username.capitalize+": " %></strong><b><%= "\""+reply.feedback+"\"" %></b><br/></td>
+	</tr>
+	<% end %>
+	</table>
+<% if @feed.created_at>DateTime.now %>
+	<%= form_for(:feedback , :url=>{:controller=>'feedbacks', :action=>'create'}) do |f| %>
+			<div class="label">
+				<%= f.hidden_field :feed_id, :value=>@feed.id %>
+				<h2><%= f.label "Reply" %></h2>
+			</div>
+			<div class="textarea">
+				<%= f.hidden_field :user_id, :value=>session[:user] %>
+				<%= f.text_area :feedback ,:size=>"50x10" %>
+			</div>
+				<%= f.submit :submit, :class=>"button" %>
+	<% end %> 
+<% else %>
+		<h1>Oppss!!! You missed the deadline.</h1>
+<% end %> 	

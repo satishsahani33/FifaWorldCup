@@ -1,0 +1,14 @@
+<h1>SCORE BOARD</h1>
+
+<table border="1">
+	<tr>
+		<th>USERS</th>
+		<th>SCORE</th>
+	</tr>
+	<% @ScoreBoard.each do |user| %>
+		<tr>
+			<td><%= user[0] %></td>
+			<td><%= user[1] %></td>
+		</tr>
+	<% end %>
+</table>

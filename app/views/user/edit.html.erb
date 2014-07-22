@@ -1,0 +1,12 @@
+<h1>EDIT USER</h1>
+
+<P>CHECK THE FOLLOWING BOX TO MAKE THE USER'S ROLE</P>
+
+<%= form_for(:update, :url=>{:controller=>'user', :action=>'update_user_role', :id=>@user.id}) do |f| %>
+	<% if @user.admin %>
+	Uncheck the box if you want to make <%= @user.username %> normal user: <%= f.check_box :admin, {:checked=>true} %>
+	<% else%>
+	Check the box if you want to make <%= @user.username %> normal user: <%= f.check_box :admin %>
+	<% end %><br/>
+	<%= f.submit :update%>
+<% end %>

@@ -1,0 +1,44 @@
+<h1>WELCOME <%= @user.username.capitalize %></h1>
+
+<p>YOUR SCORE IS <%= @score %></p>
+<br/>
+
+<p><b><h1>Your Predictions</h1></b></p>
+
+<table border="1">
+	<tr>
+		<th>TEAM A</th>
+		<th>TEAM A SCORE</th>
+		<th>TEAM B SCORE</th>
+		<th>TEAM B</th>
+		<th>PLACE BET</th>
+	</tr>
+	<%@user.predictions.each do |prediction| %>
+        <%match=Match.find(prediction.match_id)%>
+		<tr>
+			<th><%=match.team_a%></th>
+			<th><%=prediction.predict_score_a%></th>
+            <th><%=prediction.predict_score_b%></th>
+			<th><%=match.team_b%></th>
+			<% if !prediction.bet and match.date>DateTime.now && [63,64].include?(match.id) %>	
+				<td><%= link_to('BET',{:controller=>'prediction', :action=>'place_bet', :id=>prediction.id}) %></td>
+			<% elsif prediction.bet and match.date>DateTime.now %>
+				<td><%= link_to('Remove BET',{:controller=>'prediction', :action=>'remove_bet', :id=>prediction.id}) %></td>
+			<% elsif match.date<=DateTime.now %>
+				<td>N/A</td>
+			<% else %>
+				<td>N/A</td>
+			<% end %>
+		</tr>
+	<%end%>
+</table>
+
+<p>Click on PREDICT MATCHES to Predict the score of matches</p>
+<p>Click on SCORE BOARD to View the Score of Other Users</p>
+
+
+
+
+
+
+

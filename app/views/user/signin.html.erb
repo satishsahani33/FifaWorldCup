@@ -1,0 +1,8 @@
+<p>SIGN IN</p>
+
+<%= link_to("<<Go to Home", {:controller=>'user', :action=>'index'})%>
+<%= form_for(:user, :url => {:controller => 'user', :action => 'login'}) do |f| %>
+<p> Username: <%= f.text_field :username %> </p>
+<p> Password: <%= f.password_field :password %></p>
+<%= f.submit :Signin , :class=>"button"%>
+<% end %>

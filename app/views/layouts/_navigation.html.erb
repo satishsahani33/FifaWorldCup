@@ -1,0 +1,18 @@
+<div class="#">
+<%= link_to('HOME', {:controller=>'user', :action=>'welcome'}) %>&nbsp;&nbsp;
+	<% if User.adminUser(session[:user])  %>
+		<%= link_to('USERS', {:controller=>'user', :action=>'list'}) %>&nbsp;&nbsp;
+		<%= link_to('MATCHES',{:controller=>'match', :action=>'index'}) %>&nbsp;&nbsp;
+	<% end %>
+
+	<%#= link_to('PREDICT MATCHES',{:controller=>'prediction', :action=>'index', :id=>@user_id})%>&nbsp;&nbsp;
+	<%= link_to('SCORE BOARD',{:controller=>'user', :action=>'score_board'})%>&nbsp;&nbsp;
+	<%#= link_to('BONUS QUESTIONS',{:controller=>'feedbacks', :action=>'index'})%>&nbsp;&nbsp;
+	<% if session[:user] %>
+		<%= link_to('LOGOUT',{:controller=>'user', :action=>'logout'}) %>&nbsp;&nbsp;
+	<% else %>
+		<%= link_to("Sign-in", {:controller=>'user', :action=>'signin'})%>
+		<%= link_to("Sign-UP", {:controller=>'user',:action=>'signup'})%>
+	<% end %>
+
+</div>

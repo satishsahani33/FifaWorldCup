@@ -1,0 +1,21 @@
+<h1>LIST OF ALL THE USERS</h1>
+
+<table border="1">
+	<tr>
+		<th>ID</th>
+		<th>USERNAME</th>
+		<th>ADMIN</th>
+		<th>EDIT</th>
+	</tr>
+	<% @users.sort.each do |user| %>
+		<tr>
+			<th><%= user.id %></th>
+			<th><%= user.username %></th>
+			<th><%= user.admin %></th>
+			<th>
+				<%= link_to('edit', {:controller=>'user', :action=>'edit',:id=>user.id}) %>
+				<%= link_to('delete', {:controller=>'user', :action=>'delete', :id=>user.id}) %>
+			</th>
+		</tr>
+	<% end %>
+</table>

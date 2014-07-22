@@ -1,0 +1,75 @@
+<h1>Prediction</h1>
+<p>PREDICT FOLLOWING MATCHES</p>
+<%= form_for(:predict, :url=>{:controller=>'prediction', :action=>'create'}) do %>
+<%= submit_tag "submit" , :class=>"button" %>
+<table border="1">
+	<tr>
+		<th rowspan="2">DATE</th>
+		<th rowspan="2">Day</th>
+		<th rowspan="2">TEAM A</th>
+		<th rowspan="2">PREDICT SCORE</th>
+		<th colspan="2">ACTUAL SCORE</th>
+		<th rowspan="2">TEAM B</th>
+		<th rowspan="2">ALL PREDICTIONS</th>
+		<th rowspan="2">WINNERS</th>
+	</tr>
+	<tr >
+		<th>TEAM A</th>
+		<th>TEAM B</th>
+	</tr>
+		<% @matches.each do |match|%>
+			<% bets=(Prediction.where("bet=? AND match_id=?",true,match.id).length.to_s)+" "+"BETS" %>
+			<% predicts=(Prediction.where("match_id=?",match.id).length.to_s)+" "+"PREDICTIONS" %>
+			<%# counts = predictions + "," + bets  %>
+			<%= fields_for "predict[]",@predict do |prediction| %>
+				<tr>
+					<td><%= (match.date+4.hours+45.minutes).to_formatted_s(:db) %></td>
+					<td><%= Date::DAYNAMES[(match.date+4.hours+45.minutes).wday] %></td>
+					<td><% if match.date>DateTime.now%>
+							<b><%= match.team_a %></b>
+						<% else %>
+							<%= match.team_a %>
+						<% end %>
+					</td>
+					<td>
+							<%= prediction.hidden_field(:match_id, :value=>match.id) %>
+							<%= prediction.hidden_field(:bet, :value=>match.bet)%>
+							<%= prediction.text_field(:predict_score_a, :value=>match.predict_score_a,:class=>"textfield" )%>
+							<%= prediction.text_field(:predict_score_b, :value=>match.predict_score_b,:class=>"textfield")%>
+							<%#= prediction.check_box(:bet) %>
+					</td>
+					<td align="center"><b><%= match.score_a %></b></td>
+					<td align="center"><b><%= match.score_b %></b></td>
+					<td>
+						<% if match.date>DateTime.now%>
+							<b><%= match.team_b %></b>
+						<% else %>
+							<%= match.team_b %>
+						<% end %>
+					</td>
+					<td><%= link_to(predicts, {:controller=>'prediction', :action=>'list', :id=>match.id}) %><%= "("+bets+")" %></td>
+					<% winner=[]%>
+					<% predictions=Prediction.where(:match_id=>match.id) %>
+						<% predictions.each do |p| %>
+							<% if p.bet %>
+								<% if p.predict_score_a==match.score_a && p.predict_score_b==match.score_b %>
+								<% user=User.find_by_id(p.user_id) %>
+									<% winner<< user.username%>
+								<% end %>
+							<% end %>
+						<% end %>
+					<td><% winner.sort.each do |item| %>
+						<!-- <td><%= winner.sort.join(",") %></td> -->
+						<% if winner.sort.index(item)==5 %>
+							<br>
+							<%= item+"," %>
+						<% else %>
+							<%= item+"," %>
+						<% end %>
+					<% end %></td>
+				</tr>
+			<% end %>
+		<% end %>
+</table>
+	<div class="button"><%= submit_tag "submit", :class=>"button"%></div>
+<% end %>

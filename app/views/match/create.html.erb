@@ -1,0 +1,7 @@
+<h1>Create the matches</h1>
+
+
+<%= form_for(:match, :url => {:controller => 'match', :action => 'create'}) do |f| %>
+	<%= render(:partial=>'form', :locals=>{:f=>f})%>
+	<%= f.submit(:SAVEMATCH) %>
+<% end %>

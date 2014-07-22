@@ -1,0 +1,27 @@
+<p>Following are the list of predictions made by All Users</p>
+<p></p>
+
+<table border="1">
+	<tr>
+		<th>USERNAME</th>
+		<th>TEAM A</th>
+		<th>TEAM A SCORE</th>
+		<th>TEAM B SCORE</th>
+		<th>TEAM B</th>
+		<th>BET</th>
+	</tr>
+	<% @predictions.each do |prediction| %>
+		<% 
+		match=Match.find_by_id(prediction.match_id) 
+		user=User.find_by_id(prediction.user_id)
+		%>
+		<tr>
+			<td><%= user.username %></td>
+			<td><%= match.team_a %></td>
+			<td><%= prediction.predict_score_a %></td>
+			<td><%= prediction.predict_score_b %></td>
+			<td><%= match.team_b %></td>
+			<td><%= prediction.bet==1 ? "true" : "false" %></td>
+		</tr>
+	<% end %>
+</table>

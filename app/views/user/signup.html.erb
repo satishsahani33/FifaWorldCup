@@ -1,0 +1,10 @@
+<p>SIGN_UP</p>
+<%= link_to("<<Go to Home", {:controller=>'user', :action=>'index'})%><br/><br/>
+The username must be your Firstname plus first alphabet of lastname<br/>
+Example:Person with name John Smith should have username <strong>johns</strong>
+<%= form_for(:user, :url => {:controller => 'user', :action => 'create'}) do |f| %>
+<p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Username: <%= f.text_field(:username) %> </p>
+<p>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Password: <%= f.password_field(:password) %></p>
+<p> Confirm Password: <%= f.password_field :confirm_password %></p>
+ &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<%= f.submit :Signup, :class=>"button" %>
+<% end %>

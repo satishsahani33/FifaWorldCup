@@ -1,0 +1,4 @@
+<h1>DELETE THE MATCH</h1>
+<%= link_to('Back to list', {:controller=>'match',:action=>'list'}) %>
+<p>Are you sure to delete this match</p>
+<%= link_to('Delete', {:controller=>'match',:action=>'destroy', :id=>@match.id})%>
