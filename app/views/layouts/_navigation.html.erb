@@ -5,7 +5,7 @@
 		<%= link_to('MATCHES',{:controller=>'match', :action=>'index'}) %>&nbsp;&nbsp;
 	<% end %>
 
-	<%#= link_to('PREDICT MATCHES',{:controller=>'prediction', :action=>'index', :id=>@user_id})%>&nbsp;&nbsp;
+	<%= link_to('PREDICT MATCHES',{:controller=>'prediction', :action=>'index', :id=>@user_id})%>&nbsp;&nbsp;
 	<%= link_to('SCORE BOARD',{:controller=>'user', :action=>'score_board'})%>&nbsp;&nbsp;
 	<%#= link_to('BONUS QUESTIONS',{:controller=>'feedbacks', :action=>'index'})%>&nbsp;&nbsp;
 	<% if session[:user] %>

@@ -20,7 +20,8 @@
 			<th><%=prediction.predict_score_a%></th>
             <th><%=prediction.predict_score_b%></th>
 			<th><%=match.team_b%></th>
-			<% if !prediction.bet and match.date>DateTime.now && [63,64].include?(match.id) %>	
+			<%# if !prediction.bet and match.date>DateTime.now && [63,64].include?(match.id) %>
+			<% if !prediction.bet and match.date>DateTime.now %>
 				<td><%= link_to('BET',{:controller=>'prediction', :action=>'place_bet', :id=>prediction.id}) %></td>
 			<% elsif prediction.bet and match.date>DateTime.now %>
 				<td><%= link_to('Remove BET',{:controller=>'prediction', :action=>'remove_bet', :id=>prediction.id}) %></td>
